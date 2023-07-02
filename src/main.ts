@@ -7,7 +7,7 @@ interface ReleasesAndStories {
 function onOpen() {
   const lang = Session.getActiveUserLocale();
   const ui = SpreadsheetApp.getUi();
-  ui.createMenu("gas-pivotal2GSheets")
+  ui.createMenu("gas-Pivotal2GSheets")
       .addItem(lang === "ja" ? "設定" : "Settings", "setValues")
       .addItem(lang === "ja" ? "変更履歴を作成する" : "Create Changelog", "createChangeLogs")
       .addToUi();}
@@ -21,35 +21,38 @@ function createChangeLogs() {
   }
   const rows = [];
   const header = [];
-  header.push("Release Name");
-  header.push("Release Status");
-  header.push("Release Date");
-  header.push("Ticket Name");
-  header.push("Story Point");
-  header.push("Story Type");
+  header.push("Story type");
   header.push("Story URL");
+  header.push("Story name");
+  header.push("Story point");
+  header.push("Story status");
+  header.push("Release name");
+  header.push("Release status");
+  header.push("Release date");
   rows.push(header);
   for(const release of releases) {
     const stories = releasesAndStories[release.id];
     for (const story of stories) {
       const columns = [];
+      columns.push(story.story_type);
+      columns.push(story.url);
+      columns.push(story.name);
+      columns.push(story.estimate);
+      columns.push(story.current_state);
       columns.push(release.name);
       columns.push(release.current_state);
       columns.push(release.deadline);
-      columns.push(story.name);
-      columns.push(story.estimate);
-      columns.push(story.story_type);
-      columns.push(story.url);
       rows.push(columns);
     }
   }
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("ChangeLogs");
-  sheet?.getRange(1,1, rows.length, 7).setValues(rows);
-
+  sheet?.clear();
+  sheet?.getRange(1,1, rows.length, header.length).setValues(rows);
 }
+
 function setValues () {
   const ui = SpreadsheetApp.getUi();
-  let response = ui.prompt(":PivotalTracker の API Token を入力してください。");
+  let response = ui.prompt(":::PivotalTracker の API Token を入力してください。");
   let responseText = response.getResponseText();
   // getSelectedButtonでクリックされたボタンの情報を取得できる。入力値なしか×ボタンをクリックされたかの確認をしている
   if (responseText == "" || response.getSelectedButton() == ui.Button.CLOSE) {
@@ -57,7 +60,7 @@ function setValues () {
   }
   PropertiesService.getScriptProperties().setProperty("API_TOKEN", responseText);
   ui.alert("PivotalTracker の API Token を設定しました。");
-  response = ui.prompt(":PivotalTracker の ProjectId を入力してください。");
+  response = ui.prompt(":::PivotalTracker の ProjectId を入力してください。");
   responseText = response.getResponseText();
   // getSelectedButtonでクリックされたボタンの情報を取得できる。入力値なしか×ボタンをクリックされたかの確認をしている
   if (responseText == "" || response.getSelectedButton() == ui.Button.CLOSE) {
