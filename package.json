@@ -11,7 +11,7 @@
     "prepare": "husky install"
   },
   "keywords": [],
-  "author": "Ryo Kawamata <ba068082@gmail.com>",
+  "author": "K.Sakurai",
   "description": "",
   "devDependencies": {
     "@types/copy-webpack-plugin": "^8.0.1",
