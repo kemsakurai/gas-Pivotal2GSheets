@@ -9,10 +9,11 @@ function onOpen() {
   const ui = SpreadsheetApp.getUi();
   ui.createMenu("gas-Pivotal2GSheets")
       .addItem(lang === "ja" ? "設定" : "Settings", "setValues")
-      .addItem(lang === "ja" ? "変更履歴を作成する" : "Create Changelog", "createChangeLogs")
+      .addItem(lang === "ja" ? "Pivotal Trackerのストーリーを取得する" : "Get Pivotal Tracker's stories", "getPTStories")
       .addToUi();}
 
-function createChangeLogs() {
+
+function getPTStories() {
   const projectId= Number(PropertiesService.getScriptProperties().getProperty("PROJECT_ID")) ?? 0;
   const releases = Utils.fetchReleases(projectId);
   const releasesAndStories: ReleasesAndStories = {};
@@ -74,5 +75,5 @@ function setValues () {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare let global: any;
 global.onOpen = onOpen;
-global.createChangeLogs = createChangeLogs;
+global.getPTStories = getPTStories;
 global.setValues = setValues;
