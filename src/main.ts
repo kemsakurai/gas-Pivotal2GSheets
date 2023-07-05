@@ -8,10 +8,49 @@ function onOpen() {
   const lang = Session.getActiveUserLocale();
   const ui = SpreadsheetApp.getUi();
   ui.createMenu("gas-Pivotal2GSheets")
+      .addItem(lang === "ja" ? "初期化": "Initialize","initialize")
       .addItem(lang === "ja" ? "設定" : "Settings", "setValues")
       .addItem(lang === "ja" ? "Pivotal Trackerのストーリーを取得する" : "Get Pivotal Tracker's stories", "getPTStories")
-      .addToUi();}
+      .addToUi();
+}
 
+function initialize() {
+  const ui = SpreadsheetApp.getUi();
+  // メッセージと「OK」「キャンセル」ボタン
+  const response = ui.alert("スプレッドシートを初期化して初期状態にします。よろしいですか?", ui.ButtonSet.OK_CANCEL);
+  if (ui.Button.CANCEL == response) {
+    /*処理終了*/
+    return;
+  }
+  //CANCELではない場合は処理続行
+  //シート削除
+  const sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  let isExistChangeLogSheet = false;
+  for (const sheet of sheets) {
+    if(sheet.getName()== "ChangeLogs") {
+      isExistChangeLogSheet = true;
+    }
+  }
+  if(!isExistChangeLogSheet) {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+    sheet.setName("ChangeLogs");
+  } else {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("ChangeLogs");
+    sheet?.clear();
+  }
+  for (const sheet of sheets) {
+    if(sheet.getName() != "ChangeLogs") {
+      SpreadsheetApp.getActiveSpreadsheet().deleteSheet(sheet);
+    }
+  }
+  //プロパティを初期化する
+  PropertiesService.getScriptProperties().setProperty("PROJECT_ID", "");
+  PropertiesService.getScriptProperties().setProperty("API_TOKEN", "");
+
+  // メッセージと「OK」「キャンセル」ボタン
+  ui.alert("初期化が完了しました。", ui.ButtonSet.OK);
+  /* 終了*/
+}
 
 function getPTStories() {
   const projectId= Number(PropertiesService.getScriptProperties().getProperty("PROJECT_ID")) ?? 0;
@@ -77,3 +116,4 @@ declare let global: any;
 global.onOpen = onOpen;
 global.getPTStories = getPTStories;
 global.setValues = setValues;
+global.initialize = initialize;
