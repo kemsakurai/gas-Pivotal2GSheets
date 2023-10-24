@@ -10,6 +10,12 @@ function getTimeOfFailureAndResolution(story: any) {
             timeOfFailureResolution:''
         }
     }
+    if(!story.description) {
+        return {
+            timeOfFailure:'',
+            timeOfFailureResolution:''
+        }
+    }
     const lines = story.description.split('\n');
     let textExists = false;
     for (const line of lines) {
@@ -82,25 +88,25 @@ export function getPTStories() {
             columns.push(story.url);
             columns.push(story.name);
             columns.push(story.estimate);
-            columns.push(story.created_at);
-            columns.push(story.updated_at);
+            columns.push(Utils.foratDateforGSheets(story.created_at));
+            columns.push(Utils.foratDateforGSheets(story.updated_at));
             const activities = Utils.fetchActivities(projectId, story.id);
             const updateStateAts = getUpdateStateAtsFrom(activities);
-            columns.push(updateStateAts.startedAt)
-            columns.push(updateStateAts.finishedAt)
-            columns.push(updateStateAts.deliveredAt)
-            columns.push(updateStateAts.rejectedAt)
-            columns.push(story.accepted_at);
+            columns.push(Utils.foratDateforGSheets(updateStateAts.startedAt))
+            columns.push(Utils.foratDateforGSheets(updateStateAts.finishedAt))
+            columns.push(Utils.foratDateforGSheets(updateStateAts.deliveredAt))
+            columns.push(Utils.foratDateforGSheets(updateStateAts.rejectedAt))
+            columns.push(Utils.foratDateforGSheets(story.accepted_at));
             const timeOfFailureAndFailureResolution= getTimeOfFailureAndResolution(story)
             columns.push(timeOfFailureAndFailureResolution.timeOfFailure);
             columns.push(timeOfFailureAndFailureResolution.timeOfFailureResolution);
             columns.push(story.current_state);
             columns.push(release.name);
             columns.push(release.current_state);
-            columns.push(release.deadline);
-            columns.push(release.created_at);
-            columns.push(release.updated_at);
-            columns.push(release.accepted_at);
+            columns.push(Utils.foratDateforGSheets(release.deadline));
+            columns.push(Utils.foratDateforGSheets(release.created_at));
+            columns.push(Utils.foratDateforGSheets(release.updated_at));
+            columns.push(Utils.foratDateforGSheets(release.accepted_at));
             rows.push(columns);
         }
     }

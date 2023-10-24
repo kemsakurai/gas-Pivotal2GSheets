@@ -67,6 +67,13 @@ export default class Utils {
     );
   }
 
+  public static foratDateforGSheets(target: string | number | Date) {
+    if (target == "") {
+      return "";
+    }
+    return Utilities.formatDate(new Date(target), "JST", "yyyy/MM/dd hh:mm:ss");
+  }
+
   public static fetchActivities(projectCode: number, storyId: number) {
     // TODO エラーハンドリング
     const headers: GoogleAppsScript.URL_Fetch.HttpHeaders = {
