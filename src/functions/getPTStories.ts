@@ -10,13 +10,14 @@ function getTimeOfFailureAndResolution(story: any) {
             timeOfFailureResolution:''
         }
     }
-    const lines = story.description.split['\n'];
+    const lines = story.description.split('\n');
     let textExists = false;
     for (const line of lines) {
         if (textExists) {
             const trimedLine = line.trim();
             if (isDate(trimedLine)) {
                 timeOfFailure = trimedLine
+                break;
             } else {
                 timeOfFailure = ''
             }
@@ -29,6 +30,7 @@ function getTimeOfFailureAndResolution(story: any) {
             const trimedLine = line.trim();
             if (isDate(trimedLine)) {
                 timeOfFailureResolution = trimedLine
+                break;
             } else {
                 timeOfFailureResolution = ''
             }
