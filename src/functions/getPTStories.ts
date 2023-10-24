@@ -88,25 +88,25 @@ export function getPTStories() {
             columns.push(story.url);
             columns.push(story.name);
             columns.push(story.estimate);
-            columns.push(Utils.foratDateforGSheets(story.created_at));
-            columns.push(Utils.foratDateforGSheets(story.updated_at));
+            columns.push(Utils.foratDateForGSheets(story.created_at));
+            columns.push(Utils.foratDateForGSheets(story.updated_at));
             const activities = Utils.fetchActivities(projectId, story.id);
             const updateStateAts = getUpdateStateAtsFrom(activities);
-            columns.push(Utils.foratDateforGSheets(updateStateAts.startedAt))
-            columns.push(Utils.foratDateforGSheets(updateStateAts.finishedAt))
-            columns.push(Utils.foratDateforGSheets(updateStateAts.deliveredAt))
-            columns.push(Utils.foratDateforGSheets(updateStateAts.rejectedAt))
-            columns.push(Utils.foratDateforGSheets(story.accepted_at));
+            columns.push(Utils.foratDateForGSheets(updateStateAts.startedAt))
+            columns.push(Utils.foratDateForGSheets(updateStateAts.finishedAt))
+            columns.push(Utils.foratDateForGSheets(updateStateAts.deliveredAt))
+            columns.push(Utils.foratDateForGSheets(updateStateAts.rejectedAt))
+            columns.push(Utils.foratDateForGSheets(story.accepted_at));
             const timeOfFailureAndFailureResolution= getTimeOfFailureAndResolution(story)
             columns.push(timeOfFailureAndFailureResolution.timeOfFailure);
             columns.push(timeOfFailureAndFailureResolution.timeOfFailureResolution);
             columns.push(story.current_state);
             columns.push(release.name);
             columns.push(release.current_state);
-            columns.push(Utils.foratDateforGSheets(release.deadline));
-            columns.push(Utils.foratDateforGSheets(release.created_at));
-            columns.push(Utils.foratDateforGSheets(release.updated_at));
-            columns.push(Utils.foratDateforGSheets(release.accepted_at));
+            columns.push(Utils.foratDateForGSheets(release.deadline));
+            columns.push(Utils.foratDateForGSheets(release.created_at));
+            columns.push(Utils.foratDateForGSheets(release.updated_at));
+            columns.push(Utils.foratDateForGSheets(release.accepted_at));
             rows.push(columns);
         }
     }

@@ -67,8 +67,8 @@ export default class Utils {
     );
   }
 
-  public static foratDateforGSheets(target: string | number | Date) {
-    if (target == "") {
+  public static foratDateForGSheets(target: string | number | Date) {
+    if (!target || target == "") {
       return "";
     }
     return Utilities.formatDate(new Date(target), "JST", "yyyy/MM/dd hh:mm:ss");

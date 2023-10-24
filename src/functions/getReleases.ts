@@ -21,10 +21,10 @@ const setValuesToReleasesSheet = releasesWithFailureFlag => {
     for (const releaseWithFailureFlag of releasesWithFailureFlag) {
         const columns = [];
         columns.push(releaseWithFailureFlag.id);
-        columns.push(Utils.foratDateforGSheets(releaseWithFailureFlag.created_at));
-        columns.push(Utils.foratDateforGSheets(releaseWithFailureFlag.updated_at));
-        columns.push(Utils.foratDateforGSheets(releaseWithFailureFlag.accepted_at));
-        columns.push(Utils.foratDateforGSheets(releaseWithFailureFlag.deadline));
+        columns.push(Utils.foratDateForGSheets(releaseWithFailureFlag.created_at));
+        columns.push(Utils.foratDateForGSheets(releaseWithFailureFlag.updated_at));
+        columns.push(Utils.foratDateForGSheets(releaseWithFailureFlag.accepted_at));
+        columns.push(Utils.foratDateForGSheets(releaseWithFailureFlag.deadline));
         columns.push(releaseWithFailureFlag.story_type);
         columns.push(releaseWithFailureFlag.story_priority);
         columns.push(releaseWithFailureFlag.name);
