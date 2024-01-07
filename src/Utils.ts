@@ -67,7 +67,7 @@ export default class Utils {
     );
   }
 
-  public static foratDateForGSheets(target: string | number | Date) {
+  public static formatDateForGSheets(target: string | number | Date) {
     if (!target || target == "") {
       return "";
     }
