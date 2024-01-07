@@ -1,7 +1,7 @@
 import { Configuration } from "webpack";
 import * as path from "path";
-import * as GasPlugin from "gas-webpack-plugin";
-import * as CopyPlugin from "copy-webpack-plugin";
+import GasPlugin from "gas-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
 
 const config: Configuration = {
   entry: "./src/main.ts",
