@@ -2,6 +2,7 @@ import { Configuration } from "webpack";
 import * as path from "path";
 import GasPlugin from "gas-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
+import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
 
 const config: Configuration = {
   entry: "./src/main.ts",
@@ -28,6 +29,9 @@ const config: Configuration = {
     new CopyPlugin({
       patterns: [{ from: "./src/appsscript.json" }],
     }),
+    new NodePolyfillPlugin({
+      includeAliases: ['process']
+    })
   ],
 };
 

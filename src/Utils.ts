@@ -1,6 +1,12 @@
+import { env } from "process";
+
 const pivotalTrackerApiUrl = "https://www.pivotaltracker.com/services/v5";
 
 export default class Utils {
+  public static isTest(): boolean {
+    return env["NODE_ENV"] == "test";
+  }
+
   public static fetchReleases(projectCode: number) {
     // TODO エラーハンドリング
     const headers: GoogleAppsScript.URL_Fetch.HttpHeaders = {
@@ -67,7 +73,7 @@ export default class Utils {
     );
   }
 
-  public static formatDateForGSheets(target: string | number | Date) {
+  public static formatDateForGSheets(target?: string | number | Date) {
     if (!target || target == "") {
       return "";
     }
@@ -85,6 +91,7 @@ export default class Utils {
       headers: headers,
       muteHttpExceptions: true,
     };
+
     return Utils.fetchAsJson(
       pivotalTrackerApiUrl +
         "/projects/" +
@@ -104,4 +111,22 @@ export default class Utils {
     const response = UrlFetchApp.fetch(url, requestOptions);
     return JSON.parse(response.getContentText());
   };
+
+  public static convertStrToBool(str: string) {
+    try {
+      const obj = JSON.parse(str.toLowerCase());
+      return obj == true;
+    } catch (e) {
+      return Boolean("");
+    }
+  }
+
+  public static getProperty(key: string, defaultValue: string) {
+    if (Utils.isTest()) {
+      return defaultValue;
+    }
+    return (
+      PropertiesService.getScriptProperties().getProperty(key) ?? defaultValue
+    );
+  }
 }
